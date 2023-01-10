@@ -3,9 +3,17 @@ package kr.or.ddit.sample.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Repository("daoOracle")
 public class SampleDAOImpl_Oracle implements SampleDAO {
 	
 	public void init() {
@@ -17,16 +25,11 @@ public class SampleDAOImpl_Oracle implements SampleDAO {
 	}
 	
 	private Map<String, String> dummyDB;
-	
-	public SampleDAOImpl_Oracle(Map<String, String> dummyDB) { // 생성자 주입구조방식
-		super();
-		log.info("{} 객체 생성, 생성자 주입으로 dummyDB 객체 주입.", getClass().getSimpleName());
+	@Required
+	@Resource(name="oracleDB") 
+	public void setDummyDB(Map<String, String> dummyDB) {
 		this.dummyDB = dummyDB;
-//		dummyDB = new HashMap<>(); // 요걸 해결
-//		int idx = 0;
-//		dummyDB.put("PK_" + ++idx, "oracle 레코드 " + idx);
-//		dummyDB.put("PK_" + ++idx, "oracle 레코드 " + idx);
-//		dummyDB.put("PK_" + ++idx, "oracle 레코드 " + idx);
+		log.info("{} 객체 생성, setter 주입으로 dummyDB 객체 주입.", getClass().getSimpleName());
 	}
 
 	@Override

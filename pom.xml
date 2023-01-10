@@ -26,6 +26,12 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
 		<!-- Java Bean 규약 지원 -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -4,10 +4,12 @@ import java.io.File;
 import java.util.Calendar;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.sample.dao.SampleDAO;
 import kr.or.ddit.sample.dao.SampleDAOFactory;
@@ -16,6 +18,7 @@ import kr.or.ddit.sample.dao.SampleDAOImpl_Postgre;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class SampleServiceImpl implements SampleService, ApplicationContextAware {
 	private ConfigurableApplicationContext context;
 	private Resource log4j2xml;
@@ -45,8 +48,9 @@ public class SampleServiceImpl implements SampleService, ApplicationContextAware
 //	private SampleDAO dao = SampleDAOFactory.getSampleDAO(); // _Oracle와 _Postgre의 결합력이 발생하지 않음.
 	
 	// case3 : Strategy Pattern, 전략 주입자가 반드시 필요함. sampleView가 service를 사용하려면 DAO를 받아야함, 전략 주입자가 모든 결합력을 떠안게됨
+	@javax.annotation.Resource(name="daoOracle") //타입을 기준으로 하는 게 아닌 id를 기준으로 검색한다. 
 	private SampleDAO dao; // 의존해야 하는 전략객체를 내가 생성하지 않고, 상황에 따라 주입받아 사용.
-	
+//	@Autowired() // 이 어노테이션은 무조건 type(여기서는 SampleDAO)으로만 검색할 수 있어
 	public SampleServiceImpl(SampleDAO dao) {
 		super();
 		this.dao = dao;
